@@ -1,0 +1,23 @@
+body {
+  text-align: center;
+  background-color: rgb(233, 215, 207);
+  margin: 50px;
+}
+h1 {
+  font-family: "Fjord One", serif;
+  text-align: center;
+  color: purple;
+}
+p {
+  text-align: center;
+  font-family: "Fjord One", serif;
+  font-size: 24px;
+}
+a {
+  color: rgb(167, 1, 78);
+  text-decoration: none;
+  font-family: "Fjord One", sans-serif;
+}
+a:hover {
+  color: rgb(179, 164, 30);
+}

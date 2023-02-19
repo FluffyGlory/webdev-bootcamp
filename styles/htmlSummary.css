@@ -1,0 +1,68 @@
+h1 {
+  color: rgb(88, 49, 196);
+  font-size: 52px;
+}
+header img {
+  width: 300px;
+}
+header {
+  text-align: center;
+  padding: 32px;
+}
+main {
+  font-family: "Fjord One", sans-serif;
+  background-color: rgb(116, 101, 233);
+  padding: 32px;
+  margin: 32px auto;
+  width: 700px;
+  border-radius: 8px;
+  box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.3);
+  color: rgb(248, 241, 255);
+}
+body {
+  text-align: left;
+  margin: 50px;
+}
+h2 {
+  font-family: "Fjord One", sans-serif;
+  color: rgb(255, 255, 255);
+  text-align: left;
+}
+footer a {
+  padding: 12px 20px;
+  background-color: rgb(121, 40, 228);
+  color: white;
+  border-radius: 8px;
+  font-size: 24px;
+  display: inline-block;
+  margin: 0;
+}
+footer a:hover,
+footer a:active {
+  background-color: rgb(180, 12, 90);
+  text-decoration: none;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+li {
+  margin: 14px 0;
+  padding-left: 10px;
+  border-left: 5px solid transparent;
+}
+p {
+  font-size: 18px;
+}
+.highlighted-li {
+  color: rgb(255, 237, 177);
+  border-color: rgb(247, 209, 85);
+}
+.highlighted-span {
+  font-family: serif;
+  font-weight: bold;
+}
+footer {
+  text-align: center;
+}
