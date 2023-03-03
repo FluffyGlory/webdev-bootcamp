@@ -2,75 +2,85 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
-    <title>Travel Goals</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebFood</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&family=Oleo+Script:wght@700&family=Quicksand:wght@300;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles/styles.css" />
     <link rel="stylesheet" href="styles/index.css" />
   </head>
   <body>
-    <header>
-      <div id="page-logo">
-        <a href="/">Travel Goals</a>
-      </div>
+    <header id="main-header">
+      <a href="/" id="logo">WebFood</a>
       <nav>
         <ul>
-          <li><a href="/places.html">Destinations</a></li>
-          <li><a href="">About</a></li>
+          <li>
+            <a href="">Browse Meals</a>
+          </li>
+          <li>
+            <a href="">My Orders</a>
+          </li>
         </ul>
       </nav>
+      <a href="#side-drawer" class="menu-btn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </a>
     </header>
+    <aside id="side-drawer">
+      <header>
+        <a href="#" class="menu-btn">
+          <span></span>
+          <span></span>
+          <span></span>
+        </a>
+      </header>
+      <nav>
+        <ul>
+          <li>
+            <a href="">Browse Meals</a>
+          </li>
+          <li>
+            <a href="">My Orders</a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
     <main>
-      <section id="hero">
-        <div id="hero-content">
-          <h1>Joe's Travel Page</h1>
-          <p>Let's explore the world together!</p>
-          <a href="/places.html">Discover Places</a>
-        </div>
-      </section>
-      <section id="highlights">
-        <h2>Highlights</h2>
-        <ul id="destinations">
-          <li class="destination">
-            <img
-              src="images/places/miami.jpg"
-              alt="Miami streets on a sunny day"
-            />
-            <p>Miami, <strong>USA</strong></p>
+      <h1>Browse Our Delicious Meals</h1>
+      <section id="latest-products">
+        <ul>
+          <li class="food-item">
+            <article>
+              <img
+                src="images/risotto.jpg"
+                alt="Delicious risotto with tiger prawns"
+              />
+              <div class="food-item-content">
+                <h2>Risotto with Tiger Praws</h2>
+                <a href="" class="btn">Add to Cart</a>
+              </div>
+            </article>
           </li>
-          <li class="destination">
-            <img
-              src="/images/places/munich.jpg"
-              alt="Munich stadium in winter"
-            />
-            <p>Munich, <strong>Spain</strong></p>
-          </li>
-          <li class="destination">
-            <img
-              src="images/places/barcelona.jpg"
-              alt="Palm beach in Barcelona"
-            />
-            <p>Barcelona, <strong>Spain</strong></p>
+          <li class="food-item">
+            <article>
+              <img
+                src="images/cheeseburgers.jpg"
+                alt="Cheeseburgers with fries"
+              />
+              <div class="food-item-content">
+                <h2>Cheeseburgers</h2>
+                <a href="" class="btn">Add to Cart</a>
+              </div>
+            </article>
           </li>
         </ul>
       </section>
     </main>
-    <footer>
-      <ul>
-        <li>
-          <a href="https://www.instagram.com"
-            ><img src="images/icons/insta.png" alt="Instagram logo"
-          /></a>
-        </li>
-        <li>
-          <a href="https://www.facebook.com"
-            ><img src="images/icons/facebook.png" alt="Facebook logo"
-          /></a>
-        </li>
-      </ul>
-    </footer>
   </body>
 </html>
