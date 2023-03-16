@@ -2,85 +2,110 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WebFood</title>
-    <link rel="preconnect" href="https://fonts.gstatic.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles/styles.css" />
+    <title>Document</title>
     <link rel="stylesheet" href="styles/index.css" />
   </head>
   <body>
-    <header id="main-header">
-      <a href="/" id="logo">WebFood</a>
-      <nav>
-        <ul>
-          <li>
-            <a href="">Browse Meals</a>
-          </li>
-          <li>
-            <a href="">My Orders</a>
-          </li>
-        </ul>
-      </nav>
-      <a href="#side-drawer" class="menu-btn">
-        <span></span>
-        <span></span>
-        <span></span>
-      </a>
+    <header>
+      <h1><b>How can we help you?</b></h1>
     </header>
-    <aside id="side-drawer">
-      <header>
-        <a href="#" class="menu-btn">
-          <span></span>
-          <span></span>
-          <span></span>
-        </a>
-      </header>
-      <nav>
+    <form action="/" method="get">
+      <section>
         <ul>
           <li>
-            <a href="">Browse Meals</a>
+            <label for="username">Name</label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              required
+              placeholder="John Smith"
+            />
           </li>
           <li>
-            <a href="">My Orders</a>
+            <label for="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="jsmith@example.com"
+            />
           </li>
-        </ul>
-      </nav>
-    </aside>
-    <main>
-      <h1>Browse Our Delicious Meals</h1>
-      <section id="latest-products">
-        <ul>
-          <li class="food-item">
-            <article>
-              <img
-                src="images/risotto.jpg"
-                alt="Delicious risotto with tiger prawns"
-              />
-              <div class="food-item-content">
-                <h2>Risotto with Tiger Praws</h2>
-                <a href="" class="btn">Add to Cart</a>
-              </div>
-            </article>
-          </li>
-          <li class="food-item">
-            <article>
-              <img
-                src="images/cheeseburgers.jpg"
-                alt="Cheeseburgers with fries"
-              />
-              <div class="food-item-content">
-                <h2>Cheeseburgers</h2>
-                <a href="" class="btn">Add to Cart</a>
-              </div>
-            </article>
+          <li>
+            <label for="phoneNumber">Phone Number</label>
+            <input
+              type="number"
+              name="phonenumber"
+              id="phoneNumber"
+              required
+              minlength="7"
+            />
           </li>
         </ul>
       </section>
-    </main>
+      <section>
+        <label for="Message">A Message</label>
+        <textarea name="Message" id="Message" cols="30" rows="5"></textarea>
+      </section>
+      <section>
+        <ul>
+          <li>
+            <label for="originofuser">How did you find us?</label>
+            <select name="originofuser" id="originofuser">
+              <option>Web Search</option>
+              <option>Word of Mouth</option>
+              <option>Social Media</option>
+            </select>
+          </li>
+        </ul>
+      </section>
+      <div>
+        <h2>How should we contact you?</h2>
+        <ul>
+          <li class="formcontrol">
+            <input
+              type="radio"
+              name="verify"
+              id="call"
+              value="phone"
+              required
+            />
+            <label for="call">Call me</label>
+          </li>
+          <li class="formcontrol">
+            <input
+              type="radio"
+              name="verify"
+              id="email"
+              value="email"
+              required
+            />
+            <label for="email">Via email</label>
+          </li>
+          <li class="formcontrol">
+            <input
+              type="radio"
+              name="verify"
+              id="nocontact"
+              value="none"
+              required
+            />
+            <label for="nocontact">Don't respond</label>
+          </li>
+        </ul>
+        <section id="TOS">
+          <div class="formcontrol">
+            <input type="checkbox" id="terms" name="terms" />
+            <label for="terms">Agree to TOS?</label>
+          </div>
+        </section>
+        <hr />
+        <section id="resetandsubmit">
+          <button type="reset" class="reset">Reset</button>
+          <button type="submit">Submit</button>
+        </section>
+      </div>
+    </form>
   </body>
 </html>
