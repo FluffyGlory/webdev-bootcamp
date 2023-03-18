@@ -1,23 +1,18 @@
-let age = 17;
-let userName = "leif";
-let hobbies = ["Sports", "Cooking", "Reading"];
-let job = {
-  title: "Developer",
-  place: "LM Group",
-  salary: 5000,
-};
-
-function logAdultYears() {
-  let adultYears = age - 18;
-  console.log(adultYears);
+let paragraphElement = document.querySelector('p');
+function changeParagraphText(event) {
+    paragraphElement.textContent = 'Clicked!'
+    console.log('paragraph clicked!')
+    console.log(event)
 }
-logAdultYears();
-age = 45;
-logAdultYears();
-let person = {
-  name: "Max",
-  greet() {
-    console.log("Hi! I'm a method!");
-  },
-};
-person.greet();
+
+paragraphElement.addEventListener('click', changeParagraphText);
+
+let inputElement = document.querySelector('input');
+
+function retrieveUserInput(event) {
+    let enteredText = event.target.value;
+    console.log(enteredText)
+    console.log(event)
+}
+
+inputElement.addEventListener('input', retrieveUserInput);
