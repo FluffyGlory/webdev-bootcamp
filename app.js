@@ -4,41 +4,49 @@ const express = require("express");
 
 const app = express();
 
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+
+app.use(express.static("public"));
 app.use(express.urlencoded({ extended: false }));
 
-app.get("/currenttime", function (req, res) {
-  res.send("<h1>" + new Date().toISOString() + "</h1>");
-});
-
 app.get("/", function (req, res) {
-  res.send(
-    '<form action="/store-user" method="POST"><label>Your Name</label><input type="text" name="username"><button>Submit</button></form>'
-  );
+  res.render("index");
 });
 
-app.post("/store-user", function (req, res) {
-  const userName = req.body.username;
+app.get("/restaurants", function (req, res) {
+  const filePath = path.join(__dirname, "data", "restaurants.json");
 
-  const filePath = path.join(__dirname, "data", "users.json");
   const fileData = fs.readFileSync(filePath);
-  const existingUsers = JSON.parse(fileData);
-  existingUsers.push(userName);
-  fs.writeFileSync(filePath, JSON.stringify(existingUsers));
-  res.send("<h1>" + userName + "</h1>");
+  const storedRestaurants = JSON.parse(fileData);
+
+  res.render("restaurants", { numberOfRestaurants: storedRestaurants.length, restaurants: storedRestaurants });
 });
 
-app.get("/users", function (req, res) {
-  const filePath = path.join(__dirname, "data", "users.json");
+app.get("/confirm", function (req, res) {
+  res.render("confirm");
+});
+
+app.get("/recommend", function (req, res) {
+  res.render("recommend");
+});
+
+app.post("/recommend", function (req, res) {
+  const restaurant = req.body;
+  const filePath = path.join(__dirname, "data", "restaurants.json");
+
   const fileData = fs.readFileSync(filePath);
-  const existingUsers = JSON.parse(fileData);
+  const storedRestaurants = JSON.parse(fileData);
 
-  let responseData = "<ul>";
-  for (const user of existingUsers) {
-    responseData += '<li>' + user + "</li>"
-  }
-  responseData += "<ul>";
+  storedRestaurants.push(restaurant);
 
-  res.send(responseData);
+  fs.writeFileSync(filePath, JSON.stringify(storedRestaurants));
+
+  res.redirect("/confirm");
+});
+
+app.get("/about", function (req, res) {
+  res.render("about");
 });
 
 app.listen(3000);

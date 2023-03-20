@@ -1,28 +1,19 @@
 {
-  "name": "webdev",
+  "name": "web-development-complete-guide",
   "version": "1.0.0",
-  "description": "Leif takes a web dev course",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/FluffyGlory/webdev-bootcamp.git"
-  },
-  "keywords": [
-    "webdev"
-  ],
-  "author": "Leif MacCarthy",
+  "keywords": [],
+  "author": "Maximilian Schwarzmüller (Academind GmbH)",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/FluffyGlory/webdev-bootcamp/issues"
-  },
-  "homepage": "https://github.com/FluffyGlory/webdev-bootcamp#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "ejs": "^3.1.9",
+    "express": "^4.17.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.21"
+    "nodemon": "^2.0.7"
   }
 }
