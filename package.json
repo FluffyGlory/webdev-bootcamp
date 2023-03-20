@@ -1,0 +1,28 @@
+{
+  "name": "webdev",
+  "version": "1.0.0",
+  "description": "Leif takes a web dev course",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FluffyGlory/webdev-bootcamp.git"
+  },
+  "keywords": [
+    "webdev"
+  ],
+  "author": "Leif MacCarthy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FluffyGlory/webdev-bootcamp/issues"
+  },
+  "homepage": "https://github.com/FluffyGlory/webdev-bootcamp#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.21"
+  }
+}
