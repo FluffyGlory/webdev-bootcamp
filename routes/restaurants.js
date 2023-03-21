@@ -1,7 +1,7 @@
 const express = require("express");
 const resData = require("../util/restaurant-data");
 const router = express.Router();
-const uuid = require("uuid");
+const { v4: uuid } = require("uuid");
 router.get("/restaurants", function (req, res) {
   let order = req.query.order;
   let nextOrder = "desc";
@@ -48,7 +48,7 @@ router.get("/recommend", function (req, res) {
 
 router.post("/recommend", function (req, res) {
   const restaurant = req.body;
-  restaurant.id = uuid.v4();
+  restaurant.id = uuid();
   const restaurants = resData.getStoredRestaurants();
 
   restaurants.push(restaurant);
