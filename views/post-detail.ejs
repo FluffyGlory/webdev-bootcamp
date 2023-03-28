@@ -11,10 +11,13 @@
       <h1><%= post.title %></h1>
       <section id="post-meta">
         <address>
-          <a href="mailto:<%= post.author_email %>"><%= post.author_name %></a>
+          <a href="mailto:<%= post.author.email %>"><%= post.author.name%></a>
         </address>
-        |
-        <time datetime="<% post.date %>"><%= post.humanReadableDate %></time>
+         <strong> | </strong>
+        <date datetime="<%= post.date %>">
+          <%= post.humanReadableDate %>
+        </date>
+        
       </section>
       <hr />
       <section>
