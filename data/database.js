@@ -4,19 +4,22 @@ const MongoClient = mongodb.MongoClient;
 
 let database;
 
-async function connect() {
-  const client = await MongoClient.connect('mongodb://localhost:27017');
-  database = client.db('blog');
+async function connectToDatabase() {
+  const client = await MongoClient.connect(
+    'mongodb://localhost:27017'
+    // 'mongodb://67.253.236.241:27107'
+  );
+  database = client.db('auth-demo');
 }
 
 function getDb() {
   if (!database) {
-    throw { message: 'Database connection not established!' };
+    throw { message: 'You must connect first!' };
   }
   return database;
 }
 
 module.exports = {
-  connectToDatabase: connect,
-  getDb: getDb
+  connectToDatabase: connectToDatabase,
+  getDb: getDb,
 };

@@ -1,27 +1,62 @@
 const path = require("path");
 
 const express = require("express");
+const session = require("express-session");
+const mongodbStore = require("connect-mongodb-session");
 
-const blogRoutes = require("./routes/blog");
 const db = require("./data/database");
+const demoRoutes = require("./routes/demo");
+
+const MongoDBStore = mongodbStore(session);
 
 const app = express();
 
-// Activate EJS view engine
+const sessionStore = new MongoDBStore({
+  uri: "mongodb://localhost:27017",
+  databaseName: "auth-demo",
+  collection: "sessions",
+});
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-app.use(express.urlencoded({ extended: true })); // Parse incoming request bodies
-app.use(express.json());
-app.use(express.static("public")); // Serve static files (e.g. CSS files)
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: false }));
 
-app.use(blogRoutes);
+app.use(
+  session({
+    secret: "super-secret",
+    resave: false,
+    saveUninitialized: false,
+    store: sessionStore,
+    cookie: {
+      maxAge: 86400 * 7,
+    },
+  })
+);
+
+app.use(async function (req, res, next) {
+  const user = req.session.user;
+  const isAuth = req.session.isAuthenticated;
+
+  if (!user || !isAuth) {
+    return next();
+  }
+
+  const userDoc = await db
+    .getDb()
+    .collection("users")
+    .findOne({ _id: user.id });
+  const isAdmin = userDoc.isAdmin;
+  res.locals.isAuth = isAuth;
+  res.locals.isAdmin = isAdmin;
+  next();
+});
+
+app.use(demoRoutes);
 
 app.use(function (error, req, res, next) {
-  // Default error handling function
-  // Will become active whenever any route / middleware crashes
-  console.log(error);
-  res.status(500).render("500");
+  res.render("500");
 });
 
 db.connectToDatabase().then(function () {
