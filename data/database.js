@@ -7,9 +7,8 @@ let database;
 async function connectToDatabase() {
   const client = await MongoClient.connect(
     'mongodb://localhost:27017'
-    // 'mongodb://67.253.236.241:27107'
   );
-  database = client.db('auth-demo');
+  database = client.db('auth-blog');
 }
 
 function getDb() {

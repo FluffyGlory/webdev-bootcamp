@@ -79,6 +79,7 @@ a:active {
 .btn:active {
   background-color: rgb(57, 1, 102);
   border-color: rgb(57, 1, 102);
+  color: white;
 }
 
 .btn.btn-alt {
