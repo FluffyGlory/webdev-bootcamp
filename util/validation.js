@@ -1,21 +1,25 @@
-function postIsValid(title, content) {
-  return title && content && title.trim() !== "" && content.trim() !== "";
+function isEmpty(value) {
+  return !value || value.trim() === "";
 }
-function credentialsAreValid(
-  enteredEmail,
-  enteredConfirmEmail,
-  enteredPassword
-) {
+function userCredsValid(email, pass) {
+  return email && email.includes("@") && pass && pass.trim().length > 5;
+}
+
+function emailIsConfirmed(email, confirmEmail) {
+  return email === confirmEmail;
+}
+function userDetailsValid(email, pass, name, street, postal, city) {
   return (
-    enteredEmail &&
-    enteredConfirmEmail &&
-    enteredPassword &&
-    enteredPassword.trim().length > 6 &&
-    enteredEmail === enteredConfirmEmail &&
-    enteredEmail.includes("@")
+    userCredsValid(email, pass) &&
+    !isEmpty(name) &&
+    !isEmpty(street) &&
+    !isEmpty(postal) &&
+    !isEmpty(city)
   );
 }
+
 module.exports = {
-  postIsValid: postIsValid,
-  credentialsAreValid: credentialsAreValid,
+  userDetailsValid: userDetailsValid,
+  emailIsConfirmed: emailIsConfirmed,
+  userCredsValid: userCredsValid,
 };

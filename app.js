@@ -1,16 +1,20 @@
 const path = require("path");
-
 const express = require("express");
-const session = require("express-session");
 const csrf = require("csurf");
+const expressSession = require("express-session");
 
-const sessionConfig = require("./config/session.js");
+const createSessionConfig = require("./config/session");
 const db = require("./data/database");
-const authRoutes = require("./routes/auth");
-const blogRoutes = require("./routes/blog");
-const authMiddleware = require("./middlewares/auth-middleware");
-const addCSRFTokenMiddleware = require("./middlewares/csrf-token-middleware");
-const mongoDBSessionStore = sessionConfig.createSessionStore(session);
+
+const errorHandlerMiddleware = require("./middlewares/error-handler");
+const addCsrfTokenMiddleware = require("./middlewares/csrf-token");
+const checkAuthMiddleware = require("./middlewares/check-auth");
+const protectRoutesMiddleware = require("./middlewares/protect-routes");
+
+const authRoutes = require("./routes/auth.routes");
+const productRoutes = require("./routes/products.routes");
+const baseRoutes = require("./routes/base.routes");
+const adminRoutes = require("./routes/admin.routes");
 
 const app = express();
 
@@ -18,22 +22,31 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static("public"));
+app.use("/products/assets", express.static("product-data"));
+
 app.use(express.urlencoded({ extended: false }));
 
-app.use(session(sessionConfig.createSessionConfig(mongoDBSessionStore)));
+const sessionConfig = createSessionConfig();
+
+app.use(expressSession(sessionConfig));
 app.use(csrf());
 
-app.use(addCSRFTokenMiddleware);
+app.use(addCsrfTokenMiddleware);
+app.use(checkAuthMiddleware);
 
-app.use(authMiddleware);
-
+app.use(baseRoutes);
 app.use(authRoutes);
-app.use(blogRoutes);
+app.use(productRoutes);
+app.use(protectRoutesMiddleware);
+app.use("/admin", adminRoutes);
 
-app.use(function (error, req, res, next) {
-  res.render("500");
-});
+app.use(errorHandlerMiddleware);
 
-db.connectToDatabase().then(function () {
-  app.listen(3000);
-});
+db.connectToDatabase()
+  .then(function () {
+    app.listen(3000);
+  })
+  .catch(function (error) {
+    console.log("Failed to connect to the database!");
+    console.log(error);
+  });
