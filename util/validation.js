@@ -1,16 +1,16 @@
 function isEmpty(value) {
-  return !value || value.trim() === "";
-}
-function userCredsValid(email, pass) {
-  return email && email.includes("@") && pass && pass.trim().length > 5;
+  return !value || value.trim() === '';
 }
 
-function emailIsConfirmed(email, confirmEmail) {
-  return email === confirmEmail;
-}
-function userDetailsValid(email, pass, name, street, postal, city) {
+function userCredentialsAreValid(email, password) {
   return (
-    userCredsValid(email, pass) &&
+    email && email.includes('@') && password && password.trim().length >= 6
+  );
+}
+
+function userDetailsAreValid(email, password, name, street, postal, city) {
+  return (
+    userCredentialsAreValid(email, password) &&
     !isEmpty(name) &&
     !isEmpty(street) &&
     !isEmpty(postal) &&
@@ -18,8 +18,11 @@ function userDetailsValid(email, pass, name, street, postal, city) {
   );
 }
 
+function emailIsConfirmed(email, confirmEmail) {
+  return email === confirmEmail;
+}
+
 module.exports = {
-  userDetailsValid: userDetailsValid,
+  userDetailsAreValid: userDetailsAreValid,
   emailIsConfirmed: emailIsConfirmed,
-  userCredsValid: userCredsValid,
 };

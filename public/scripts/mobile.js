@@ -1,8 +1,8 @@
-const mobileMenuBtn = document.getElementById("mobile-menu-btn");
-const mobileMenu = document.getElementById("mobile-menu");
+const mobileMenuBtnElement = document.getElementById('mobile-menu-btn');
+const mobileMenuElement = document.getElementById('mobile-menu');
 
 function toggleMobileMenu() {
-  mobileMenu.classList.toggle("open-flex");
+  mobileMenuElement.classList.toggle('open');
 }
 
-mobileMenuBtn.addEventListener("click", toggleMobileMenu);
+mobileMenuBtnElement.addEventListener('click', toggleMobileMenu);

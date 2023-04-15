@@ -1,81 +1,83 @@
-const User = require("../models/user.model");
-const authUtil = require("../util/auth.util.js");
-const validation = require("../util/validation");
-const sessionFlash = require("../util/session-flash");
+const User = require('../models/user.model');
+const authUtil = require('../util/authentication');
+const validation = require('../util/validation');
+const sessionFlash = require('../util/session-flash');
 
 function getSignup(req, res) {
   let sessionData = sessionFlash.getSessionData(req);
 
   if (!sessionData) {
     sessionData = {
-      email: "",
-      confirmEmail: "",
-      password: "",
-      fullname: "",
-      street: "",
-      postal: "",
-      city: "",
+      email: '',
+      confirmEmail: '',
+      password: '',
+      fullname: '',
+      street: '',
+      postal: '',
+      city: '',
     };
   }
-  res.render("customer/auth/signup", { inputData: sessionData });
+
+  res.render('customer/auth/signup', { inputData: sessionData });
 }
 
 async function signup(req, res, next) {
-  const rb = req.body;
   const enteredData = {
-    email: rb.email,
-    confirmEmail: rb["confirm-email"],
-    password: rb.password,
-    fullname: rb.fullname,
-    street: rb.street,
-    postal: rb.postal,
-    city: rb.city,
+    email: req.body.email,
+    confirmEmail: req.body['confirm-email'],
+    password: req.body.password,
+    fullname: req.body.fullname,
+    street: req.body.street,
+    postal: req.body.postal,
+    city: req.body.city,
   };
+
   if (
-    !validation.userDetailsValid(
-      rb.email,
-      rb.password,
-      rb.fullname,
-      rb.street,
-      rb.postal,
-      rb.city
+    !validation.userDetailsAreValid(
+      req.body.email,
+      req.body.password,
+      req.body.fullname,
+      req.body.street,
+      req.body.postal,
+      req.body.city
     ) ||
-    !validation.emailIsConfirmed(rb.email, rb["confirm-email"])
+    !validation.emailIsConfirmed(req.body.email, req.body['confirm-email'])
   ) {
-    sessionFlash.flashData(
+    sessionFlash.flashDataToSession(
       req,
       {
         errorMessage:
-          "Please check all fields for errors. Password must be greater than 6 characters.",
+          'Please check your input. Password must be at least 6 character slong, postal code must be 5 characters long.',
         ...enteredData,
       },
       function () {
-        res.redirect("/signup");
+        res.redirect('/signup');
       }
     );
-
     return;
   }
 
   const user = new User(
-    rb.email,
-    rb.password,
-    rb.fullname,
-    rb.street,
-    rb.postal,
-    rb.city
+    req.body.email,
+    req.body.password,
+    req.body.fullname,
+    req.body.street,
+    req.body.postal,
+    req.body.city
   );
 
   try {
-    if (await user.getUserByEmail()) {
-      sessionFlash.flashData(
+    const existsAlready = await user.existsAlready();
+
+    if (existsAlready) {
+      sessionFlash.flashDataToSession(
         req,
         {
-          errorMessage: "This account already exists! Try logging in instead.",
+          errorMessage: 'User exists already! Try logging in instead!',
           ...enteredData,
         },
         function () {
-          res.redirect("/signup");
+          res.redirect('/signup');
         }
       );
       return;
@@ -83,10 +85,11 @@ async function signup(req, res, next) {
 
     await user.signup();
   } catch (error) {
-    return next(error);
+    next(error);
+    return;
   }
 
-  res.redirect("/login");
+  res.redirect('/login');
 }
 
 function getLogin(req, res) {
@@ -94,53 +97,57 @@ function getLogin(req, res) {
 
   if (!sessionData) {
     sessionData = {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     };
   }
 
-  res.render("customer/auth/login", { inputData: sessionData });
+  res.render('customer/auth/login', { inputData: sessionData });
 }
 
 async function login(req, res, next) {
   const user = new User(req.body.email, req.body.password);
-  const errorSessionData = {
-    errorMessage: "Invalid credentials - double check your email and password.",
+  let existingUser;
+  try {
+    existingUser = await user.getUserWithSameEmail();
+  } catch (error) {
+    next(error);
+    return;
+  }
+
+  const sessionErrorData = {
+    errorMessage:
+      'Invalid credentials - please double-check your email and password!',
     email: user.email,
     password: user.password,
   };
 
-  let existingUser;
-  try {
-    existingUser = await user.getUserByEmail();
-  } catch (error) {
-    next(error);
-  }
-
   if (!existingUser) {
-    sessionFlash.flashData(req, errorSessionData, function () {
-      res.redirect("/login");
+    sessionFlash.flashDataToSession(req, sessionErrorData, function () {
+      res.redirect('/login');
     });
-
     return;
   }
-  const passwordIsCorrect = await user.comparePasswords(existingUser.password);
+
+  const passwordIsCorrect = await user.hasMatchingPassword(
+    existingUser.password
+  );
 
   if (!passwordIsCorrect) {
-    sessionFlash.flashData(req, errorSessionData, function () {
-      res.redirect("/login");
+    sessionFlash.flashDataToSession(req, sessionErrorData, function () {
+      res.redirect('/login');
     });
     return;
   }
 
   authUtil.createUserSession(req, existingUser, function () {
-    res.redirect("/");
+    res.redirect('/');
   });
 }
 
 function logout(req, res) {
-  authUtil.destroyUserSession(req);
-  res.redirect("/");
+  authUtil.destroyUserAuthSession(req);
+  res.redirect('/login');
 }
 
 module.exports = {

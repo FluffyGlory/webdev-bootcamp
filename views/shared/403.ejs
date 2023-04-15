@@ -1,10 +1,10 @@
-<%- include('./includes/head', { pageTitle: 'Not Authorized!'}) %>
+<%- include('includes/head', { pageTitle: 'An error occurred' }) %>
 </head>
 <body>
-  <%- include('./includes/header') %>
+  <%- include('includes/header') %>
   <main>
-    <h1>Not Authorized</h1>
-    <p>Unfortunately, you aren't authorized to access this page. Try logging in with a different account.</p>
-    <p><a href="/" class='btn'>Back to safety!</a></p>
+    <h1>Not authorized!</h1>
+    <p>You are not authorized!</p>
+    <p><a class="btn" href="/">Back to safety!</a></p>
   </main>
-  <%- include('./includes/footer') %>
+<%- include('includes/footer') %>
